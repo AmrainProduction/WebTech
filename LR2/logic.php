@@ -1,20 +1,24 @@
 <?php
 
-define('DB_HOST', '127.0.0.1');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_name', 'books');
+$DB_HOST = '127.0.0.1';
+$DB_USER = 'root';
+$DB_PASSWORD = '';
+$DB_name = 'books';
 
-$mysql = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_name);
-if ($mysql->connect_errno) exit("ошибка подключения к БД");
-$mysql->set_charset("utf8");
+//подключение к бд
+
+try {
+    $mysql = new PDO("mysql::host=$DB_HOST;dbname=$DB_name", $DB_USER, $DB_PASSWORD);
+} catch (PDOException $exception) {
+    echo($exception->getMessage());
+}
 
 // список книг
 
 $queryBooks = $mysql->query('SELECT books.preview, books.name_book, id_author.surname, id_author.name, books.description, books.price FROM books INNER JOIN id_author ON books.id_author=id_author.id');
 
 $booksList = [];
-while ($row = $queryBooks->fetch_assoc()) {
+while ($row = $queryBooks->fetch()) {
     $booksList[] = $row;
 }
 
@@ -24,8 +28,15 @@ while ($row = $queryBooks->fetch_assoc()) {
 $queryAuthors = $mysql->query("SELECT id_author.surname, id_author.name FROM id_author");
 
 $authorsList = [];
-while ($row = $queryAuthors->fetch_assoc()) {
-    $authorsList[] = $row;
+$count = 1;
+while ($row = $queryAuthors->fetch()) {
+    $authorsList[$count] = [
+        'id' => $count,
+        'name' => $row[1],
+        'surname' => $row[0],
+    ];
+    $count++;
+//    $authorsList[] = $row;
 }
 
 
@@ -70,10 +81,8 @@ if (isset($_GET['clear'])) {
 }
 
 // Фильтрация по наименованию книги SELECT books.preview, books.name_book, id_author.surname, id_author.name, books.description, books.price FROM books INNER JOIN id_author ON books.id_author=id_author.id AND books.description LIKE '%Мастер и Маргарита%';
-if (isset($_GET['POST_nameBook']))
-{
-    if (filter_var($_GET['POST_nameBook'], FILTER_SANITIZE_STRING))
-    {
+if (isset($_GET['POST_nameBook'])) {
+    if (filter_var($_GET['POST_nameBook'], FILTER_SANITIZE_STRING)) {
         $query .= " AND books.name_book LIKE '%" . $_GET["POST_nameBook"] . "%'";
     }
 
@@ -81,21 +90,17 @@ if (isset($_GET['POST_nameBook']))
 
 // Фильтрация по автору
 
-if (isset($_GET['POST_author']))
-{
-    if (filter_var($_GET['POST_author'], FILTER_SANITIZE_STRING))
-    {
-        $query .= " AND id_author.surname LIKE '%" . $_GET["POST_author"] . "%'";
+if (isset($_GET['POST_author'])) {
+    if (filter_var($_GET['POST_author'], FILTER_SANITIZE_STRING)) {
+        $query .= " AND id_author.id LIKE '%" . $_GET["POST_author"] . "%'";
     }
 
 }
 
 // Фильтрация по описанию
 
-if (isset($_GET['POST_description']))
-{
-    if (filter_var($_GET['POST_description'], FILTER_SANITIZE_STRING))
-    {
+if (isset($_GET['POST_description'])) {
+    if (filter_var($_GET['POST_description'], FILTER_SANITIZE_STRING)) {
         $query .= " AND books.description LIKE '%" . $_GET["POST_description"] . "%'";
     }
 
@@ -130,7 +135,7 @@ $result = $mysql->query($query);
 
 $tableData = [];
 
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch()) {
     $tableData[] = $row;
 }
 
