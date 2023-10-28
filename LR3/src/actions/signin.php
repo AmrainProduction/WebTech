@@ -1,0 +1,42 @@
+<?php
+
+require_once __DIR__ . '/../functions/functions.php';
+
+require_once __DIR__ . '/../../connect.php';
+
+$email = isset($_POST['email']) ? $_POST['email'] : null;
+$password = isset($_POST['password']) ? $_POST['password'] : null;
+
+if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    addValidationError('email', 'Wrong email!!!');
+    addOldValue('email', $email);
+    setMessageLogin('error', 'Неверный email');
+    redirect("../../login.php");
+}
+
+$stmt = $mysql->prepare("SELECT * FROM users WHERE email = :email");
+$stmt->execute(['email' => $email]);
+$user_log = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+
+if (!$user_log) {
+    addOldValue('email', $email);
+    setMessageLogin('error', 'Пользователь не найден');
+    redirect("../../login.php");
+}
+
+if(!password_verify($password, $user_log['password'])) {
+    addOldValue('email', $email);
+    setMessageLogin('error', 'Неверный пароль');
+    redirect("../../login.php");
+}
+
+$_SESSION['user']['id'] = $user_log['id'];
+$_SESSION['user']['name'] = $user_log['name'];
+$_SESSION['user']['surname'] = $user_log['surname'];
+
+redirect('../../index.php');
+
+
+
+
