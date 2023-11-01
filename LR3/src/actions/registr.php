@@ -4,22 +4,6 @@ require_once __DIR__ . '/../functions/functions.php';
 
 require_once __DIR__ . '/../../connect.php';
 
-//выносим данные из запроса в отдельные переменные
-
-//$name = $_POST['name'];
-//$surname = $_POST['surname'];
-//$patronymic = $_POST['patronymic'];
-//$date_birth = $_POST['date_birth'];
-//$interests = $_POST['interests'];
-//$address = $_POST['address'];
-//$gender = $_POST['gender'];
-//$link_vkontakte = $_POST['link_vkontakte'];
-//$blood_type = $_POST['blood_type'];
-//$rh_factor = $_POST['rh_factor'];
-//$email = $_POST['email'];
-//$password = $_POST['password'];
-//$passwordConfirm = $_POST['passwordConfirm'];
-
 $_SESSION['validation'] = [];
 
 //валидация полей
@@ -27,7 +11,6 @@ $_SESSION['validation'] = [];
 if (empty($_POST['name']) || !filter_var($_POST['name'], FILTER_SANITIZE_STRING)) {
     addValidationError('name', 'Wrong name!!!');
 }
-
 
 if (empty($_POST['surname']) || !filter_var($_POST['surname'], FILTER_SANITIZE_STRING)) {
     addValidationError('surname', 'Wrong surname!!!');
@@ -37,7 +20,7 @@ if (empty($_POST['patronymic']) || !filter_var($_POST['patronymic'], FILTER_SANI
     addValidationError('patronymic', 'Wrong patronymic!!!');
 }
 
-if (empty($_POST['date_birth'])) {
+if (empty($_POST['date_birth']) || !filter_var($_POST['date_birth'], FILTER_SANITIZE_STRING)) {
     addValidationError('date_birth', 'Wrong date birth!!!');
 }
 
@@ -65,9 +48,9 @@ if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL
     addValidationError('email', 'Wrong email!!!');
 }
 
-if (empty($_POST['password'])) {
-    addValidationError('password', 'Empty password!!!');
-}
+if (!addValidatePassword($_POST['password'])) {
+    addValidationError('password', 'Wrong password!!!');
+} 
 
 if ($_POST['password'] !== $_POST['passwordConfirm']) {
     addValidationError('password', 'Passwords are not equal!!!');

@@ -13,6 +13,13 @@ function addValidationError($fieldName, $message)
 //    $_POST['validation'][$fieldName] = $message;
     $_SESSION['validation'][$fieldName] = $message;
 }
+function addValidatePassword($password)
+{
+    return preg_match(
+        '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.{7,})(?=.*[!@#$%^&*()+=\[\]{};\':"|,.<>?])(?=.* +)(?=.*-+)(?=.*_)[^А-Яа-я]*$/',
+        $password
+    );
+}
 
 function maybeHasError($fieldName)
 {
@@ -28,7 +35,7 @@ function getErrorMessage($fieldName)
 
 function addOldValue($key, $value)
 {
-//  echo $_POST['old'][$key] = $value;
+//  $_POST['old'][$key] = $value;
     echo $_SESSION['old'][$key] = $value;
 }
 
