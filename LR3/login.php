@@ -1,9 +1,12 @@
 <?php
 
 require_once __DIR__ . '/src/functions/functions.php';
-checkGuest();
+
+require_once 'src/actions/signin.php';
 
 require './templateСomponents/header.php';
+
+checkGuest();
 
 ?>
 
@@ -11,7 +14,7 @@ require './templateСomponents/header.php';
     <div class="m-4 login-box">
         <h3 class="col-12 d-flex justify-content-center align-items-start p-3">Authorization</h3>
         <div class="col-12 ps-5 pe-5 pb-5">
-            <form class="w-100" action="src/actions/signin.php" method="post">
+            <form class="w-100" action="login.php" method="post">
 
                 <?php if (hasMessageLogin('error')): ?>
                     <div class="warning-login"><?php echo getMessageLogin('error')?></div>
@@ -19,7 +22,7 @@ require './templateСomponents/header.php';
 
                 <label for="email" class="mb-3 w-100">
                     <div class="pb-1">Enter your email:</div>
-                    <input <?php maybeHasError('email'); ?> value="<?php getOldValue('email'); ?>" class="form-control"
+                    <input <?php maybeHasError('email'); ?> value="<?php htmlspecialchars(getOldValue('email')); ?>" class="form-control"
                                                             type="text" name="email" placeholder="email"
                                                             aria-label="email">
                     <small style="color: red"><?php getErrorMessage('email'); ?></small>

@@ -1,6 +1,9 @@
 <?php
+
 require_once __DIR__ . '/src/functions/functions.php';
+
 checkAuth();
+
 require 'connect.php';
 
 require_once './src/actions/logic.php';
@@ -8,7 +11,6 @@ require_once './src/actions/logic.php';
 require './templateСomponents/header.php';
 
 $user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-
 $stmt = $mysql->prepare("SELECT * FROM users WHERE id = :id");
 $stmt->execute(['id' => $user_id]);
 $user = $stmt->fetch(\PDO::FETCH_ASSOC);

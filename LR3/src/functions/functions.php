@@ -10,9 +10,9 @@ function redirect($path)
 
 function addValidationError($fieldName, $message)
 {
-//    $_POST['validation'][$fieldName] = $message;
-    $_SESSION['validation'][$fieldName] = $message;
+    $_POST['validation'][$fieldName] = $message;
 }
+
 function addValidatePassword($password)
 {
     return preg_match(
@@ -23,51 +23,37 @@ function addValidatePassword($password)
 
 function maybeHasError($fieldName)
 {
-//    echo isset($_POST['validation'][$fieldName]) ? 'aria-invalid="true"' : '';
-    echo isset($_SESSION['validation'][$fieldName]) ? 'aria-invalid="true"' : '';
+    echo isset($_POST['validation'][$fieldName]) ? 'aria-invalid="true"' : '';
 }
 
 function getErrorMessage($fieldName)
 {
-//    echo isset($_POST['validation'][$fieldName]) ? $_POST['validation'][$fieldName] : '';
-    echo isset($_SESSION['validation'][$fieldName]) ? $_SESSION['validation'][$fieldName] : '';
+    echo isset($_POST['validation'][$fieldName]) ? $_POST['validation'][$fieldName] : '';
 }
 
 function addOldValue($key, $value)
 {
-//  $_POST['old'][$key] = $value;
-    echo $_SESSION['old'][$key] = $value;
+    $_POST['old'][$key] = $value;
 }
 
 function getOldValue($key)
 {
-//    $value = isset($_POST['old'][$key]) ? $_POST['old'][$key] : '';
-//    return $value;
-    $value = isset($_SESSION['old'][$key]) ? $_SESSION['old'][$key] : '';
-    unset($_SESSION['old'][$key]);
-    echo $value;
+    echo isset($_POST['old'][$key]) ? $_POST['old'][$key] : '';
 }
 
 function setMessageLogin($key, $message)
 {
-//    $_POST['message'][$key] = $message;
-    $_SESSION['message'][$key] = $message;
+    $_POST['message'][$key] = $message;
 }
 
 function hasMessageLogin($key)
 {
-//    return isset($_POST['message'][$key]);
-    return isset($_SESSION['message'][$key]);
+    return isset($_POST['message'][$key]);
 }
 
 function getMessageLogin($key)
 {
-//    $message = isset($_POST['message'][$key]) ? $_POST['message'][$key] : '';
-//    unset($_POST['message'][$key]);
-//    return $message;
-    $message = isset($_SESSION['message'][$key]) ? $_SESSION['message'][$key] : '';
-    unset($_SESSION['message'][$key]);
-    return $message;
+    return isset($_POST['message'][$key]) ? $_POST['message'][$key] : '';
 }
 
 function logout()
@@ -121,5 +107,5 @@ function checkGuestHeaderState()
 
 function clearValidation()
 {
-    $_SESSION['validation'] = [];
+    $_POST['validation'] = [];
 }
