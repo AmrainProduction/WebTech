@@ -55,14 +55,14 @@ function logout()
 function checkAuth()
 {
     if (!isset($_SESSION['user']['id'])) {
-        redirect('/sites/LR3/login.php');
+        redirect('/sites/LR4/login.php');
     }
 }
 
 function checkGuest()
 {
     if (isset($_SESSION['user']['id'])) {
-        redirect('/sites/LR3/index.php');
+        redirect('/sites/LR4/index.php');
     }
 }
 
