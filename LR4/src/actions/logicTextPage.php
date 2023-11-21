@@ -33,7 +33,7 @@ function case9($text)
         // Удаляем пробелы перед точками, запятыми и двоеточиями и добавляем пробел после них
         $processedText = preg_replace('/\s*([.,:])\s*/', '$1 ', $processedText);
 
-        echo htmlspecialchars($processedText);
+        echo $processedText;
 
     } else {
         echo "Empty";
@@ -84,9 +84,14 @@ function insertAnchorLinks($text, $anchorLinks)
     }
 }
 
-function case19($text) {
-    $allowedTags = '<a><table><tr><td><th><h1><h2><h3><h4><h5><h6><p><div>';
-    $text = strip_tags($text, $allowedTags);
-    $text = preg_replace('/<(\w+)[^>]*>/', '<$1>', $text); // remove attributes from text tags
-    return htmlspecialchars($text);
+function case19($text)
+{
+    if (isset($text) && !empty($text)) {
+        $allowedTags = '<a><table><tr><td><th><h1><h2><h3><h4><h5><h6><p><div>';
+        $text = strip_tags($text, $allowedTags);
+        $text = preg_replace('/<(\w+)[^>]*>/', '<$1>', $text); // remove attributes from text tags
+        return htmlspecialchars($text);
+    } else {
+        return "Empty";
+    }
 }
