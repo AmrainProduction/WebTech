@@ -421,6 +421,54 @@ ul, ol, li {
     background: #ecc7c7;
 }
 
+/*--------------------------------------------------------ExportImport-------------------------------------------------------------*/
+
+.wrapper-btn-Ex-Im {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.wrapper-btn-Ex-Im a:hover{
+    color: inherit;
+}
+
+.btn-Ex {
+    display: flex;
+    border-top: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px;
+    color: black;
+}
+
+.btn-Ex-Im {
+    display: flex;
+    border: 1px solid lightgray;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 10px;
+    color: black;
+}
+
+.btn-Ex:hover {
+    background: lightgray;
+}
+
+.btn-Ex-Im:hover {
+    background: lightgray;
+}
+
+.color-link-ex {
+    color: #26a9e0;
+}
+
+.color-link-ex:hover {
+    color: #1d86b2;
+}
 
 /*--------------------------------------------------------FOOTER-------------------------------------------------------------*/
 
