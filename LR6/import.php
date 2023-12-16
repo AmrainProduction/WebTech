@@ -2,19 +2,19 @@
 
 require_once './src/actions/logic.php';
 
-require_once './src/actions/logicExport.php';
+require_once './src/actions/logicImport.php';
 
 require './templateСomponents/header.php';
 ?>
     <main class="main main-text p-10">
-        <form action="export.php" method="post">
-            <div class="col-12 mb-2">Экспорт таблицы BOOKS в формате CSV</div>
-            <div class="col-12 mb-2"><?php echo !empty($resExport) ? $resExport : '';?></div>
-            <div class="col-12 d-flex justify-content-start align-items-center mb-2">
-                <input type="text" class="search-field form-control" name="path_to_save" placeholder="/LR5/exported.csv" value="">
+        <form action="import.php" method="post" enctype="multipart/form-data">
+            <div class="col-12 mb-2">Выберите файл .CSV для импорта</div>
+            <div class="col-12 mb-2"><?php echo !empty($resImport) ? $resImport : '';?></div>
+            <div class="mb-2">
+                <input type="file" name="file" class="col-2 form-control">
             </div>
             <div class="col-12 d-flex justify-content-start align-items-center">
-                <input type="submit" class="btn btn-primary me-5" value="Сохранить" name="export">
+                <input type="submit" class="btn btn-primary me-5" value="Загрузить" name="import">
             </div>
         </form>
 

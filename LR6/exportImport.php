@@ -2,21 +2,16 @@
 
 require_once './src/actions/logic.php';
 
-require_once './src/actions/logicExport.php';
-
 require './templateСomponents/header.php';
+
 ?>
     <main class="main main-text p-10">
-        <form action="export.php" method="post">
-            <div class="col-12 mb-2">Экспорт таблицы BOOKS в формате CSV</div>
-            <div class="col-12 mb-2"><?php echo !empty($resExport) ? $resExport : '';?></div>
-            <div class="col-12 d-flex justify-content-start align-items-center mb-2">
-                <input type="text" class="search-field form-control" name="path_to_save" placeholder="/LR5/exported.csv" value="">
+        <div class="container-fluid">
+            <div class="col-12 wrapper-btn-Ex-Im">
+                <a href="./export.php" class="btn-Ex">Экспорт</a>
+                <a href="./import.php" class="btn-Ex-Im">Импорт</a>
             </div>
-            <div class="col-12 d-flex justify-content-start align-items-center">
-                <input type="submit" class="btn btn-primary me-5" value="Сохранить" name="export">
-            </div>
-        </form>
+        </div>
 
         <div class="row d-block">
             <div class="col-mb-12 mt-5 d-flex justify-content-between align-items-center">
@@ -47,7 +42,6 @@ require './templateСomponents/header.php';
             }
             ?>
         </div>
-
     </main>
 <?php
 require './templateСomponents/footer.html'
