@@ -2,7 +2,7 @@
 
 require_once './src/actions/logic.php';
 
-require_once './src/actions/addListLogic.php';
+require './src/actions/addListLogic.php';
 
 require './templateСomponents/header.php';
 
@@ -13,14 +13,15 @@ require './templateСomponents/header.php';
                 <h1>Список книг</h1>
             </div>
         </div>
+        <div class="col-12 mb-2"><?php echo empty($resultAdd) ? '' : $resultAdd;?></div>
         <form action="addList.php" method="post" enctype="multipart/form-data">
             <div class="row d-flex">
                 <div class="col-12 mt-5 d-flex">
                     <div class="col-2 me-3">
-                        <input type="file" name="file" class="form-control">
+                        <input type="file" name="picture" class="form-control">
                     </div>
                     <div class="col-2 me-3">
-                        <input class="form-control" type="text" id="name" name="name" placeholder="Name Book:">
+                        <input class="form-control" type="text" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>" placeholder="Name Book:">
                     </div>
                     <div class="col-2 me-3">
                         <div class="col-12 d-flex justify-content-center align-items-center">
@@ -40,10 +41,10 @@ require './templateСomponents/header.php';
                         </div>
                     </div>
                     <div class="col-2 me-3">
-                        <textarea class="form-control" id="description" name="description" placeholder="Введите описание книги" rows="1"></textarea>
+                        <textarea class="form-control" id="description" name="description" placeholder="Введите описание книги" rows="1"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
                     </div>
                     <div class="col-2 me-3">
-                        <input class="form-control" type="text" id="price" name="price" placeholder="Price:">
+                        <input class="form-control" type="text" id="price" name="price" value="<?php echo isset($_POST['price']) ? $_POST['price'] : ''; ?>" placeholder="Price:">
                     </div>
                     <div class="col-2">
                         <input type="submit" class="btn btn-primary me-5" value="Добавить" name="add_in_list">
