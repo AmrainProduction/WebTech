@@ -2,11 +2,11 @@
 
 session_start();
 
-function redirect($path)
-{
-    header("Location: $path");
-    die();
-}
+//function redirect($path)
+//{
+//    header("Location: $path");
+//    die();
+//}
 
 function addValidationError($fieldName, $message)
 {

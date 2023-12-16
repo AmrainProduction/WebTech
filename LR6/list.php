@@ -1,6 +1,12 @@
 <?php
 
-require_once './src/actions/logic.php';
+require_once './src/actions/booksActions.php';
+
+$books = booksActions::get_books();
+if (!$books) {
+    redirect('books.php');
+}
+$authors = booksActions::get_authors();
 
 require './templateСomponents/header.php';
 
@@ -30,7 +36,7 @@ require './templateСomponents/header.php';
         </div>
         <div class="row d-block">
             <?php
-            foreach ($tableData as $row) {
+            foreach ($books as $row) {
                 ?>
                 <div class="col-mb-12 d-flex justify-content-between align-items-start wrapper-card-book mb-3">
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo $row['id']; ?></div>
@@ -42,7 +48,7 @@ require './templateСomponents/header.php';
                     <div class="col-mb-2 d-flex justify-content-center align-items-start book-item-description"><?php echo $row['description']; ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo $row['price']; ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item">
-                        <a href="edit_loan.php?id=<?=$row['id']?>" type='submit' class='btn btn-primary' id="submit">Редактировать</a>
+                        <a href="" type='submit' class='btn btn-primary' id="submit">Редактировать</a>
                     </div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item">
                         <form method="post" action="">

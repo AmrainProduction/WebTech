@@ -5,24 +5,18 @@ class BooksTable
 {
     public static function create_book(
         string $preview,
-        string $name,
+        string $name_book,
         int $id_author,
         string $description,
         int $price,
-        string $id = null,
     ): void {
-        if (!$id) {
-            $id = uniqid();
-        }
 
         $query = DB::prepare(
-            'INSERT INTO games (id, preview, name, id_author, description, price) ' .
-            'VALUES (:id, :preview, :name, :id_author, :description, :price)'
+            "INSERT INTO books (preview, name_book, id_author, description, price) VALUES (:preview, :name_book, :id_author, :description, :price)"
         );
 
-        $query->bindValue(':id', $id);
-        $query->bindValue(':img', $preview);
-        $query->bindValue(':name', $name);
+        $query->bindValue(':preview', $preview);
+        $query->bindValue(':name_book', $name_book);
         $query->bindValue(':id_author', $id_author);
         $query->bindValue(':description', $description);
         $query->bindValue(':price', $price);
@@ -47,6 +41,37 @@ class BooksTable
         }
         $query = DB::prepare($query);
         $query->execute($params);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function update_book(
+        string $preview,
+        string $name_book,
+        int $id_author,
+        string $description,
+        int $price,
+    ): void {
+        $query = DB::prepare(
+            'UPDATE books SET preview=:preview, name_book=:name_book, id_author=:id_author, description=:description, price=:price 
+                      WHERE id=:id'
+        );
+//        $query->bindValue(':id', $id);
+        $query->bindValue(':preview', $preview);
+        $query->bindValue(':name_book', $name_book);
+        $query->bindValue(':id_author', $id_author);
+        $query->bindValue(':description', $description);
+        $query->bindValue(':price', $price);
+        try {
+            $query->execute();
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function get_authors(): array {
+        $query = DB::prepare('SELECT * FROM id_author order by id_author.id');
+        $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }
