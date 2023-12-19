@@ -11,7 +11,7 @@ require './templateСomponents/header.php';
             <div class="col-12 mb-2">Экспорт таблицы BOOKS в формате CSV</div>
             <div class="col-12 mb-2"><?php echo !empty($resExport) ? $resExport : '';?></div>
             <div class="col-12 d-flex justify-content-start align-items-center mb-2">
-                <input type="text" class="search-field form-control" name="path_to_save" placeholder="/LR5/exported.csv" value="">
+                <input type="text" class="search-field form-control" name="path_to_save" placeholder="exported.csv" value="">
             </div>
             <div class="col-12 d-flex justify-content-start align-items-center">
                 <input type="submit" class="btn btn-primary me-5" value="Сохранить" name="export">

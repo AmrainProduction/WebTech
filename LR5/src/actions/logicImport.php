@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../../connect.php';
 require_once __DIR__ . '/../functions/functions.php';
 
-
 if (isset($_POST['import'])) {
     if (!empty($_FILES['file']['tmp_name'])) {
 
@@ -16,23 +15,37 @@ if (isset($_POST['import'])) {
             exit;
         }
 
+        $hasMismatch = false; // флаг для обозначения наличия строк с несоответствующим количеством столбцов
+
         $handle = fopen($file, "r");
         $books = array();
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $books[] = array(
-                'id' => $data[0],
-                'preview' => $data[1],
-                'name_book' => $data[2],
-                'id_author' => $data[3],
-                'description' => $data[4],
-                'price' => $data[5]
-            );
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if (count($data) != 6) {
+                    $hasMismatch = true;
+                    break; // если найдена строка с неправильным количеством столбцов, завершаем цикл
+                } else {
+                    $books[] = array(
+                        'id' => $data[0],
+                        'preview' => $data[1],
+                        'name_book' => $data[2],
+                        'id_author' => $data[3],
+                        'description' => $data[4],
+                        'price' => $data[5]
+                    );
+                }
+            }
+
         }
 
         $lengthArr = count($books);
 
         fclose($handle);
+
+        if ($hasMismatch) {
+            return $resImport = "Дамп содержит строки с неправильным количеством столбцов (не равным 6)";
+        }
 
         try {
             // Создание новой таблицы
