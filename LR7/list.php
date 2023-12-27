@@ -43,16 +43,16 @@ require './templateСomponents/header.php';
                     <div class="col-mb-4 d-flex justify-content-center align-items-center book-image">
                         <img src="assets/img/Books/<?php echo $row['preview']; ?>" alt="/">
                     </div>
-                    <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo  htmlspecialchars($row['name'] . " " . $row['surname']); ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo  htmlspecialchars($row['name_book']); ?></div>
+                    <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo  htmlspecialchars($row['name'] . " " . $row['surname']); ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-start book-item-description"><?php echo  htmlspecialchars($row['description']); ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item"><?php echo  htmlspecialchars($row['price']); ?></div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item">
-                        <a href="" type='submit' class='btn btn-primary' id="submit">Редактировать</a>
+                        <a href="./editList.php?id=<?=$row['id']?>" class='btn btn-primary' >Редактировать</a>
                     </div>
                     <div class="col-mb-2 d-flex justify-content-center align-items-center book-item">
                         <form method="post" action="">
-                            <button type='submit' class='btn btn-danger' id="submit" value="<?=$row['id']?>" name="delete">Удалить</button>
+                            <a href="./src/actions/delete.php?id=<?=$row['id']?>" class='btn btn-danger'>Удалить</a>
                         </form>
                     </div>
                 </div>

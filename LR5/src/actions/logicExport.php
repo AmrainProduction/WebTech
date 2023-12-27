@@ -32,22 +32,35 @@ if (isset($_POST['export']) && isset($_POST['path_to_save'])) {
 
     // Send the CSV file to worker.php
 
+    // Установка URL для отправки POST-запроса
     $url = 'http://localhost/Sites/LR5/worker.php';
+
+    // Инициализация сеанса cURL с указанным URL
     $curl = curl_init($url);
 
+    // Установка опций запроса cURL, CURLOPT_POST устанавливает тип запроса POST
     curl_setopt($curl, CURLOPT_POST, true);
+
+    // Устанавливает данные для отправки POST-запроса
+    // В данном случае отправляется файл с данными, указанным в переменной $filePath
+    // Тип файла устанавливается как application/vnd.ms-excel
     curl_setopt($curl, CURLOPT_POSTFIELDS, [
         'file' => new CURLFile($filePath, 'application/vnd.ms-excel', $pathToSave)
     ]);
+
+    // Устанавливает значение true, чтобы вернуть результат выполнения запроса в виде строки
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
+    // Выполняет запрос cURL и возвращает результат выполнения в виде строки
     $response = curl_exec($curl);
-    print_r($response);
-    
+    print_r($response); // Вывод результата запроса
+
+    // Проверка на ошибку выполнения запроса
     if ($response === false) {
         throw new Exception("Ошибка отправки файла скрипту worker.php");
     }
 
+    // Завершение сеанса cURL
     curl_close($curl);
 } else {
     return $resExport = '';
